@@ -1,31 +1,31 @@
 import React from 'react';
 import logo from '../assets/banana-01.png';
-import { useHistory, Link } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 
 function NavBar() {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <nav>
-        <Link to="/">
+        <NavLink to="/">
           <span className="logo-container">
             <img src={logo} alt="logo"/>
             <h3>
               Banana Security
             </h3>
           </span>
-        </Link>
+        </NavLink>
 
       <div>
         <button
           type="button"
-          onClick={() => history.push('/signin')}
+          onClick={() => navigate('/signin')}
         >
           Log in
         </button>
         <button
           type="button"
-          onClick={() => history.push('/signup')}
+          onClick={() => navigate('/signup')}
         >
           Registreren
         </button>
