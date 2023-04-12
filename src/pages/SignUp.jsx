@@ -59,6 +59,7 @@ function SignUp() {
           typeAttribute="email"
           idAttribute="email"
           nameAttribute="email"
+          autoCompleteAttr="email"
           placeHolder="Email"
           labelTextTop="Provide your email adress"
           stateValue={ formState.email }
@@ -69,6 +70,7 @@ function SignUp() {
           typeAttribute="text"
           idAttribute="username"
           nameAttribute="username"
+          autoCompleteAttr="username"
           placeHolder="Username"
           labelTextTop="Fill in your Username"
           stateValue={ formState.username }
@@ -78,6 +80,7 @@ function SignUp() {
           typeAttribute="password"
           idAttribute="password"
           nameAttribute="password"
+          autoCompleteAttr="current-password"
           placeHolder="Password"
           labelTextTop="Fill in your password"
           // Let op handlechange nog toevoegen

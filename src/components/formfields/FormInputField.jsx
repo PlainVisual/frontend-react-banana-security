@@ -4,6 +4,7 @@ function FormInputField({
             classAttribute,
             typeAttribute, 
             idAttribute, 
+            autoCompleteAttr,
             patternAttribute,
             numMinAtr,
             numMaxAtr,
@@ -43,6 +44,7 @@ function FormInputField({
                   type={ typeAttribute } 
                   id={ idAttribute } 
                   name={ nameAttribute }
+                  autoComplete={ autoCompleteAttr }
                   placeholder={ placeHolder }
                   pattern={ patternAttribute}
                   min={ numMinAtr }

@@ -52,6 +52,7 @@ function SignIn() {
           typeAttribute="email"
           idAttribute="email"
           nameAttribute="email"
+          autoCompleteAttr="email"
           placeHolder="Email"
           labelTextTop="Provide your email adress"
           stateValue={ formState.email }
@@ -63,6 +64,7 @@ function SignIn() {
           typeAttribute="password"
           idAttribute="password"
           nameAttribute="password"
+          autoCompleteAttr="current-password"
           placeHolder="Password"
           labelTextTop="Fill in your password"
          
