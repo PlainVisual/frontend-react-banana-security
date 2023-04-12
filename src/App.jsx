@@ -6,8 +6,14 @@ import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import './App.css';
+import PrivateRoute from './components/PrivateRoute';
+import { AuthContext } from './assets/context/AuthContext';
+import { useContext } from 'react';
 
 function App() {
+
+  const { isAuth } = useContext(AuthContext);
+
   return (
     <>
       <NavBar />
@@ -21,7 +27,13 @@ function App() {
 
           <Route 
             path="/profile"
-            element={ <Profile /> }
+            element={ 
+                <PrivateRoute
+                  authenticated={ isAuth }
+                >
+                  <Profile />
+                </PrivateRoute> 
+              }
           />
 
           <Route 
