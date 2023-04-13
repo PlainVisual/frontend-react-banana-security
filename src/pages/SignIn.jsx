@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import FormInputField from '../components/formfields/FormInputField';
 import "../components/formfields/formfield.css"
-import { AuthContext } from '../assets/context/AuthContext';
+import { AuthContext } from '../context/AuthContext';
 import { useContext } from 'react';
 import { useState } from 'react';
 

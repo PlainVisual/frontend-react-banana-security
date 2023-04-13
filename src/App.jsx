@@ -7,7 +7,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import './App.css';
 import PrivateRoute from './components/PrivateRoute';
-import { AuthContext } from './assets/context/AuthContext';
+import { AuthContext } from './context/AuthContext';
 import { useContext } from 'react';
 
 function App() {

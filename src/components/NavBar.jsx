@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '../assets/banana-01.png';
 import { useNavigate, NavLink } from 'react-router-dom';
-import { AuthContext } from '../assets/context/AuthContext';
+import { AuthContext } from '../context/AuthContext';
 import { useContext } from 'react';
 
 function NavBar() {

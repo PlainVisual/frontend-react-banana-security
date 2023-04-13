@@ -11,7 +11,7 @@ function AuthContextProvider({ children }) {
 
   const [ authState, setAuthState ] = useState({
                                                 isAuth: false,
-                                                user: "",
+                                                user: null,
                                                 username: "",
                                               })
 
@@ -20,7 +20,7 @@ function AuthContextProvider({ children }) {
   const navigate = useNavigate();
 
   // helperfunction's
-
+  // !!!!!!!!!!!!!!!!!!!  deze functie registreren niet in de context plaatsen
   function registeredUser(email, username) {
     setAuthState({ ...authState, isAuth: false, user: email, username: username, });
     setRegisterdEmail(email);
@@ -40,7 +40,7 @@ function AuthContextProvider({ children }) {
 
   function logOut() {
 
-    setAuthState({  ...authState, isAuth: false, user: "", username: "", });
+    setAuthState({  ...authState, isAuth: false, user: null, username: "", });
     console.log("Gebruiker is uitgelogd");
     navigate("/")
 

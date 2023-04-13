@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import FormInputField from '../components/formfields/FormInputField';
 import { useState } from 'react';
-import { AuthContext } from '../assets/context/AuthContext';
+import { AuthContext } from '../context/AuthContext';
 import { useContext } from 'react';
 
 function SignUp() {
@@ -80,7 +80,7 @@ function SignUp() {
           typeAttribute="password"
           idAttribute="password"
           nameAttribute="password"
-          autoCompleteAttr="current-password"
+          autoCompleteAttr="new-password"
           placeHolder="Password"
           labelTextTop="Fill in your password"
           // Let op handlechange nog toevoegen
