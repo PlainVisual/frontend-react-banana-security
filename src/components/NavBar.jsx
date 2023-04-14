@@ -8,7 +8,10 @@ function NavBar() {
   
   const navigate = useNavigate();
 
-  const { isAuth, logOutFunction, user } = useContext(AuthContext);
+  // Dit zijn de properties die wij globaal binnenkrijgen via useContext.
+  // isAuth is de toggle true - flase ingelogd of niet
+
+  const { isAuth, logOutFunction, email } = useContext(AuthContext);
 
   // console.log(isAuth);
 
@@ -44,7 +47,7 @@ function NavBar() {
 
         <>
 
-        <p>Ingelogd als: { user }</p>
+        <p>Ingelogd als: { email }</p>
 
         <button
           type="button"

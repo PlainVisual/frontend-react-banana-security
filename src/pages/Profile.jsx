@@ -5,7 +5,7 @@ import { useContext } from 'react';
 
 function Profile() {
 
-  const { user, username } = useContext(AuthContext);
+  const { email, username } = useContext(AuthContext);
 
   return (
     <>
@@ -13,7 +13,7 @@ function Profile() {
       <section>
         <h2>Gegevens</h2>
         <p><strong>Gebruikersnaam:</strong> { username } </p>
-        <p><strong>Email:</strong> { user }</p>
+        <p><strong>Email:</strong> { email }</p>
       </section>
       <section>
         <h2>Strikt geheime profiel-content</h2>

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import FormInputField from '../components/formfields/FormInputField';
-import "../components/formfields/formfield.css"
+import "../components/formfields/formfield.css";
+import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { useContext } from 'react';
 import { useState } from 'react';
@@ -8,17 +9,17 @@ import { useState } from 'react';
 
 
 function SignIn() {
+  
+  const { logInFunction } = useContext(AuthContext);
 
-  const [ formState, setFormState ] = useState({
+  const [ formSignIn, setFormSignIn ] = useState({
 
     email: "",
+    password: "",
       
 
   });
   
-  
-  const { logInFunction, user } = useContext(AuthContext);
-
   const handleFormChange = (e) => {
     
     const changedFieldName = e.target.name;
@@ -26,20 +27,43 @@ function SignIn() {
     // console.log(e.target.value)
     // console.log("changedFieldName:", changedFieldName);
        
-    setFormState({
+    setFormSignIn({
 
       
-      ...formState,
+      ...formSignIn,
       [changedFieldName]: e.target.value,
 
     });
 
   }
 
-  const handleLogin = (e) => {
+  async function handleLogIn(e) {
+
     e.preventDefault();
-    const { email } = formState;
-    logInFunction(email)
+
+    const { email, password } = formSignIn;
+
+    try {
+
+      const res = await axios.post('http://localhost:3000/login', {
+          
+          email: email,
+          password: password,
+
+      });      
+      
+      // Na het inloggen ontvangen wij vanuit de backend de token die wij kunnen doorgeven aan de loginFunction.
+      console.log(res.data.accessToken);
+      
+      const token = res.data.accessToken;
+      
+      logInFunction(token);
+            
+
+    } catch(e) {
+      console.error(e)
+    }
+    
   }
 
   return (
@@ -47,7 +71,7 @@ function SignIn() {
       <h1>Inloggen</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias cum debitis dolor dolore fuga id molestias qui quo unde?</p>
 
-      <form onSubmit={ handleLogin }>
+      <form onSubmit={ handleLogIn }>
         <FormInputField 
           typeAttribute="email"
           idAttribute="email"
@@ -55,7 +79,7 @@ function SignIn() {
           autoCompleteAttr="email"
           placeHolder="Email"
           labelTextTop="Provide your email adress"
-          stateValue={ formState.email }
+          stateValue={ formSignIn.email }
           stateSetter={ handleFormChange } 
                   
 
@@ -67,6 +91,8 @@ function SignIn() {
           autoCompleteAttr="current-password"
           placeHolder="Password"
           labelTextTop="Fill in your password"
+          stateValue={ formSignIn.password }
+          stateSetter={ handleFormChange }
          
         />
         <button

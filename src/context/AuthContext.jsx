@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import jwt_decode from "jwt-decode";
 
 // Wij maken hier de context aan. Die wij later in een component kunnen aanroepen
 export const AuthContext = createContext({});
@@ -11,58 +13,72 @@ function AuthContextProvider({ children }) {
 
   const [ authState, setAuthState ] = useState({
                                                 isAuth: false,
-                                                user: null,
+                                                email: "",
                                                 username: "",
+                                                user: null,
                                               })
-
-  const [registerdEmail, setRegisterdEmail] = useState("")
 
   const navigate = useNavigate();
 
-  // helperfunction's
-  // !!!!!!!!!!!!!!!!!!!  deze functie registreren niet in de context plaatsen
-  function registeredUser(email, username) {
-    setAuthState({ ...authState, isAuth: false, user: email, username: username, });
-    setRegisterdEmail(email);
-    navigate("/signin");
-  }
-
-  function logIn(email) {
-
-    if (registerdEmail.toLowerCase() === email.toLowerCase()) {
+  async function logIn(token) {
     
-      setAuthState({ ...authState, isAuth: true });
-      // console.log(`${ email } is ingelogd`);
-      // console.log(`${ registerdEmail } is ingelogd`);
+      // localStorage gebruiken wij om de gegeven token in de browser op te slaan.
+      localStorage.setItem('token', token);
+      //  Wij ontcijferen de token met behulp van jwt_decode
+      const decoded = jwt_decode(token);
+      // Hierdoor hebben wij toegang tot de ID van de user
+      console.log(decoded.sub);
+
+      try {  
+
+      // Via axios.get roepen wij gegevens van de user op. Dit in combinatie met de token waaraan de user wordt herkend 
+      const res = await axios.get(`http://localhost:3000/600/users/${ decoded.sub }`, {
+
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${ token }`,
+        },
+
+        });
+
+        console.log(res)
+      
+      // Via destructering halen we de keys op vanuit het object res.data
+      const { email, user, username } = res.data;
+      // Nu kunnen we een copy van de authState maken via ...spreadoperator 
+      setAuthState({ ...authState, 
+                          isAuth: true, 
+                          email: email, 
+                          user: user, 
+                          username: username, });
+      
       navigate("/profile");
-    }
+
+      } catch(e) {
+        console.error(e);
+      }
+
   }
 
-  function logOut() {
-
-    setAuthState({  ...authState, isAuth: false, user: null, username: "", });
-    console.log("Gebruiker is uitgelogd");
+  function logOut(token) {
+    localStorage.removeItem('token', token);
+    setAuthState({  ...authState, isAuth: false, email: "", username: "", user: null,  });
     navigate("/")
-
   }
 
   const authentication = {
     isAuth: authState.isAuth,
-    user: authState.user,
+    email: authState.email,
     username: authState.username,
     logInFunction: logIn,
     logOutFunction: logOut,
-    registerdUserFunction: registeredUser,
   }
 
   return (
 
-    
-
     <AuthContext.Provider value={ authentication } >
       { children }
     </AuthContext.Provider>
-
 
   )
 
@@ -70,4 +86,3 @@ function AuthContextProvider({ children }) {
 }
 
 export default AuthContextProvider;
-

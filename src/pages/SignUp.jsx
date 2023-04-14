@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 import FormInputField from '../components/formfields/FormInputField';
 import { useState } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import { useContext } from 'react';
+
 
 function SignUp() {
 
@@ -12,12 +13,12 @@ function SignUp() {
 
     email: "",
     username: "",
+    password: "",
     
-
   });
 
-  // useContext wordt gebruikt om de helperfunctie logInFunction aan te spreken
-  const { registerdUserFunction } = useContext(AuthContext);
+ 
+  const navigate = useNavigate();
 
   // anonieme functie om de wijzigingen input velden bij te werken na invoeren email / password
   const handleFormChange = (e) => {
@@ -36,14 +37,34 @@ function SignUp() {
 
     });
 
-  }
+  }  
   
-  
-  const handleLogin = (e) => {
+  // Dit is een asynchrone functie om de connectie naar de backend te bewerkstelligen.
+  async function postNewUser(e) {
+    
     e.preventDefault();
-    // Hiermee destructeren wij de formState en geven de waarde email door aan de logInFunction die wij via useContext globaal kunnen aanspreken.
-    const { email, username } = formState;
-    registerdUserFunction(email, username)
+
+    // Hiermee destructeren wij de formState en geven de waarde email door aan de logInFunction en de axios.post die wij via useContext globaal kunnen aanspreken. Hiermee registreren wij de gebruiker met de juiste gegevens,
+    const { email, username, password } = formState;
+
+    try {
+
+      const res = await axios.post('http://localhost:3000/register', {
+        email: email,
+        username: username,
+        password: password,
+      });
+
+      
+     } catch(e) {
+      console.error(e);
+
+    }
+
+    navigate("/signin");
+    // // Dit is de functie waarmee wij de data(email, username, password) doorvoeren aan de login functie in de AuthContext.js.
+    // // Hiermee kunnen we de data verder verwerken binnen de applicatie door gebruik te maken van useContext.
+    // registerdUserFunction(email, username, password)
     console.log(formState)
 
   }
@@ -54,7 +75,7 @@ function SignUp() {
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur atque consectetur, dolore eaque eligendi
         harum, numquam, placeat quisquam repellat rerum suscipit ullam vitae. A ab ad assumenda, consequuntur deserunt
         doloremque ea eveniet facere fuga illum in numquam quia reiciendis rem sequi tenetur veniam?</p>
-      <form onSubmit={ handleLogin }>
+      <form onSubmit={ postNewUser }>
       <FormInputField 
           typeAttribute="email"
           idAttribute="email"
@@ -83,7 +104,8 @@ function SignUp() {
           autoCompleteAttr="new-password"
           placeHolder="Password"
           labelTextTop="Fill in your password"
-          // Let op handlechange nog toevoegen
+          stateValue={ formState.password }
+          stateSetter={ handleFormChange } 
         />
          <button
           type='submit'
