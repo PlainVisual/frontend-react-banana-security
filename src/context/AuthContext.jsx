@@ -8,7 +8,7 @@ import jwt_decode from "jwt-decode";
 export const AuthContext = createContext({});
 
 // Hier maken wij de provider aan die wij als een schill om app.js gaan plaatsen.
-// Hiermee zorgen wij ervoor dat wij de data kunnen doorgeven aan de App component
+// Hiermee zorgen wij ervoor dat wij de data globaal kunnen doorgeven aan de App component
 function AuthContextProvider({ children }) {
 
   const [ authState, setAuthState ] = useState({

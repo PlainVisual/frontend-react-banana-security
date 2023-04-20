@@ -7,11 +7,10 @@ import { useContext } from 'react';
 import { useState } from 'react';
 
 
-
 function SignIn() {
-  
+  // Via useContext brengen wij de functie login over vanuit de AuthContext
   const { logInFunction } = useContext(AuthContext);
-
+  // useState waarbij wij bijhouden welke velden er worden ingevuld inlog en password
   const [ formSignIn, setFormSignIn ] = useState({
 
     email: "",
@@ -20,6 +19,7 @@ function SignIn() {
 
   });
   
+  // anonieme functie die een event bijhoudt van de inputvelden
   const handleFormChange = (e) => {
     
     const changedFieldName = e.target.name;
@@ -29,7 +29,7 @@ function SignIn() {
        
     setFormSignIn({
 
-      
+      // Hierbij maken wij gebruik van de spreadoperator om de setFormSignIn aan te passen met de value die wordt ingegeven in de inputvelden.
       ...formSignIn,
       [changedFieldName]: e.target.value,
 
@@ -44,7 +44,7 @@ function SignIn() {
     const { email, password } = formSignIn;
 
     try {
-
+      // Hier maken wij een post request via axios en geven de email en password door vanuit de state door deze te destructeren.
       const res = await axios.post('http://localhost:3000/login', {
           
           email: email,
@@ -52,11 +52,11 @@ function SignIn() {
 
       });      
       
-      // Na het inloggen ontvangen wij vanuit de backend de token die wij kunnen doorgeven aan de loginFunction.
+      // Na het inloggen ontvangen wij vanuit de backend de JWT token die wij kunnen doorgeven aan de loginFunction.
       console.log(res.data.accessToken);
       
       const token = res.data.accessToken;
-      
+      // Dit is de loginFunction die wij hebben gedeclareerd in the AuthContext.js
       logInFunction(token);
             
 
@@ -78,6 +78,7 @@ function SignIn() {
           nameAttribute="email"
           autoCompleteAttr="email"
           placeHolder="Email"
+          requiredAttr={ true }
           labelTextTop="Provide your email adress"
           stateValue={ formSignIn.email }
           stateSetter={ handleFormChange } 
@@ -90,6 +91,7 @@ function SignIn() {
           nameAttribute="password"
           autoCompleteAttr="current-password"
           placeHolder="Password"
+          requiredAttr={ true }
           labelTextTop="Fill in your password"
           stateValue={ formSignIn.password }
           stateSetter={ handleFormChange }

@@ -5,6 +5,7 @@ function FormInputField({
             typeAttribute, 
             idAttribute, 
             autoCompleteAttr,
+            requiredAttr,
             patternAttribute,
             numMinAtr,
             numMaxAtr,
@@ -31,6 +32,7 @@ function FormInputField({
                 type={ typeAttribute } 
                 id={ idAttribute } 
                 name={ nameAttribute }
+                required= { requiredAttr }
                 placeholder={ placeHolder }
                 value={ stateValue }
                 onChange={ stateSetter }
@@ -44,6 +46,7 @@ function FormInputField({
                   type={ typeAttribute } 
                   id={ idAttribute } 
                   name={ nameAttribute }
+                  required= { requiredAttr }
                   autoComplete={ autoCompleteAttr }
                   placeholder={ placeHolder }
                   pattern={ patternAttribute}
@@ -64,9 +67,6 @@ function FormInputField({
 
 
   )
-
-
-
 
 }
 

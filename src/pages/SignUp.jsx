@@ -82,6 +82,7 @@ function SignUp() {
           nameAttribute="email"
           autoCompleteAttr="email"
           placeHolder="Email"
+          requiredAttr={ true }
           labelTextTop="Provide your email adress"
           stateValue={ formState.email }
           stateSetter={ handleFormChange } 
@@ -93,6 +94,7 @@ function SignUp() {
           nameAttribute="username"
           autoCompleteAttr="username"
           placeHolder="Username"
+          requiredAttr={ true }
           labelTextTop="Fill in your Username"
           stateValue={ formState.username }
           stateSetter={ handleFormChange } 
@@ -103,6 +105,7 @@ function SignUp() {
           nameAttribute="password"
           autoCompleteAttr="new-password"
           placeHolder="Password"
+          requiredAttr={ true }
           labelTextTop="Fill in your password"
           stateValue={ formState.password }
           stateSetter={ handleFormChange } 
