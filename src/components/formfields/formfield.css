@@ -1,0 +1,9 @@
+
+fieldset {
+  border: none;
+  padding: unset;
+}
+
+fieldset + fieldset {
+  margin-top: 1rem;
+}
