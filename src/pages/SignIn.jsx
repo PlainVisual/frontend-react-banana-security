@@ -55,9 +55,9 @@ function SignIn() {
       // Na het inloggen ontvangen wij vanuit de backend de JWT token die wij kunnen doorgeven aan de loginFunction.
       console.log(res.data.accessToken);
       
-      const token = res.data.accessToken;
+      const tokenAcces = res.data.accessToken;
       // Dit is de loginFunction die wij hebben gedeclareerd in the AuthContext.js
-      logInFunction(token);
+      logInFunction(tokenAcces);
             
 
     } catch(e) {
